@@ -1,8 +1,14 @@
-FROM centos:7
-MAINTAINER jean <jean@localhost>
-RUN yum install -y httpd net-tools
-RUN echo "<h2>WELCOME TO THE 667 LOBBY MY G <h2>" /var/www//index.html
-EXPOSE 51
-CMD ["-D","FOREGROUND"]
-ENTRYPOINT ["/usr/sbin/httpd"]
+FROM almalinux:8
+LABEL maintainer="jean <jean@localhost>"
+
+RUN dnf -y update && \
+    dnf -y install httpd net-tools curl && \
+    dnf clean all
+
+EXPOSE 80
+
+RUN echo "<h1>Bienvenue sur le serveur Apache de Jean !</h1>" > /var/www/html/index.html
+
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+
 
